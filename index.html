@@ -1,0 +1,82 @@
+<head>
+    <title>Colors</title>
+    <script src="colors.js" type="application/ecmascript"></script>
+    <link type="text/css" rel="stylesheet" href="box.css">
+</head>
+<body>
+    <button onclick="spawnbox()">Spawnbox</button>
+    <button onclick="spawn_new_box()">Spawn new box</button>
+    <button onclick="fill()">Fill</button>
+
+
+    <div id="box-spawn" class="flex-container">
+    </div>
+    <script>
+        var prev_col = undefined;
+        function spawnbox(){
+            if (prev_col === undefined) {
+                color = colors.random();
+            } else {
+                color = colors.relative_color(20, prev_col);
+            }
+            s = '<div class="spawned-box" style="background-color:' + color.color + '"></div>'
+            prev_col = color;
+            var container = document.getElementById("box-spawn")
+            container.innerHTML = container.innerHTML + s;
+        }
+        
+        function spawn_new_box(){
+            var container = document.getElementById("box-spawn");
+            var new_container = document.createElement("div");
+            container.parentElement.appendChild(new_container);
+            new_container.id = container.id;
+            new_container.className = "flex-container";
+            container.id = "";
+            prev_col = undefined;
+            spawnbox();
+        }
+        
+        function fill() {
+            spawnboxes()
+        }
+        
+        var count = 0;
+        var col_count = 10;
+        var row_count = 0;
+        var rows = 20;
+        function spawnboxes(){
+            count += 1;
+            if (prev_col === undefined) {
+                color = colors.random();
+            } else {
+                color = colors.relative_color(25, prev_col);
+            }
+            s = '<div class="spawned-box" style="background-color:' + color.color + '"><p style="color:' + colors.invert(color).color + '">' + ( count + row_count * col_count ) + '</p></div>'
+            prev_col = color;
+            var container = document.getElementById("box-spawn")
+            container.innerHTML = container.innerHTML + s;
+            if (count == col_count){
+                var x = spawn_new_boxs();
+                if ( x == -1 ){
+                    return;
+                }
+                count = 0;
+            }
+            setTimeout(spawnboxes, .5)
+        }
+        
+        function spawn_new_boxs(){
+            row_count += 1;
+            var container = document.getElementById("box-spawn");
+            var new_container = document.createElement("div");
+            container.parentElement.appendChild(new_container);
+            new_container.id = container.id;
+            new_container.className = "flex-container";
+            container.id = "";
+            prev_col = undefined;
+            if (row_count == rows){
+                return -1;
+            }
+        }
+    </script>
+</body>

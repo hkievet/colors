@@ -1,0 +1,14 @@
+.flex-container{
+    display:flex;
+    height:50px;
+}
+
+.spawned-box{
+    width:50px;
+    background-color:black;
+}
+
+p{
+    color:aliceblue;
+    text-align:center;
+}
